@@ -1,11 +1,13 @@
 package projects.nology.todo.task;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import projects.nology.todo.common.exceptions.NotFoundException;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,13 +31,13 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> create(@Valid @RequestBody CreateTaskDTO data) {
+    public ResponseEntity<Task> createTask(@Valid @RequestBody CreateTaskDTO data) {
        Task savedTask = this.taskService.create(data);
        return new ResponseEntity<Task>(savedTask, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> getAllTasks() {
+    public ResponseEntity<List<Task>> findAllTasks() {
         List<Task> allTasks = this.taskService.findAll();
         return new ResponseEntity<List<Task>>(allTasks, HttpStatus.OK);
     }
@@ -46,7 +48,16 @@ public class TaskController {
         if (foundTask.isPresent()) {
             return new ResponseEntity<>(foundTask.get(), HttpStatus.OK);
         }
-        throw new NotFoundException("Task with id" + id + " does not exist");
+        throw new NotFoundException("Task with ID: " + id + " does not exist");
+    }
+
+    @GetMapping(value="/tasks", params = "category")
+    public ResponseEntity<List<Task>> getTasksByCategory(@RequestParam String category) throws NotFoundException {
+        List<Task> foundTasks = this.taskService.findByCategory(category);
+        if (!foundTasks.isEmpty()) {
+            return new ResponseEntity<List<Task>>(foundTasks, HttpStatus.OK);
+        }
+        throw new NotFoundException("The category '" + category + "' does not exist. No tasks found.");
     }
 
     @DeleteMapping("/{id}")
@@ -55,7 +66,7 @@ public class TaskController {
         if (deleted) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        throw new NotFoundException("Task with id" + id + " does not exist");
+        throw new NotFoundException("Task with ID: " + id + " does not exist");
     }
 
     @PatchMapping("{id}")

@@ -67,6 +67,11 @@ public class TaskService {
         this.taskRepository.save(taskFromDb);
         return Optional.of(taskFromDb);
     }
+
+    public List<Task> findByCategory(String category) {
+        return taskRepository.findByCategory_TypeIgnoreCase(category);
+        
+    }
     
     
 }
