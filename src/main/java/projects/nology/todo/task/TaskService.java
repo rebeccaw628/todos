@@ -41,7 +41,6 @@ public class TaskService {
         return this.taskRepository.findById(id);
     }
 
-    //@Transactional annotation ?
     public boolean deleteById(Long id) {
         Optional<Task> foundTask = this.findById(id);
         if (foundTask.isEmpty()) {

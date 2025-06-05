@@ -1,14 +1,18 @@
 package projects.nology.todo.category;
 
-public class CreateCategoryDTO {
-    private String category;
+import jakarta.validation.constraints.NotBlank;
 
-    public CreateCategoryDTO(String category) {
-        this.category = category;
+public class CreateCategoryDTO {
+
+    @NotBlank
+    private String type;
+
+    public CreateCategoryDTO(String type) {
+        this.type = type;
     }
 
-    public String getCategory() {
-        return category;
+    public String getType() {
+        return type;
     }
 
     

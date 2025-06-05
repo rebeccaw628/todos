@@ -37,7 +37,7 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> findAllTasks() {
+    public ResponseEntity<List<Task>> getAllTasks() {
         List<Task> allTasks = this.taskService.findAll();
         return new ResponseEntity<List<Task>>(allTasks, HttpStatus.OK);
     }
@@ -51,13 +51,10 @@ public class TaskController {
         throw new NotFoundException("Task with ID: " + id + " does not exist");
     }
 
-    @GetMapping(value="/tasks", params = "category")
+    @GetMapping(params = "category")
     public ResponseEntity<List<Task>> getTasksByCategory(@RequestParam String category) throws NotFoundException {
         List<Task> foundTasks = this.taskService.findByCategory(category);
-        if (!foundTasks.isEmpty()) {
             return new ResponseEntity<List<Task>>(foundTasks, HttpStatus.OK);
-        }
-        throw new NotFoundException("The category '" + category + "' does not exist. No tasks found.");
     }
 
     @DeleteMapping("/{id}")

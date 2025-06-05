@@ -15,9 +15,9 @@ import projects.nology.todo.task.Task;
 @Table(name = "categories")
 public class Category extends BaseEntity{
     
-    @OneToMany(mappedBy = "category")
-    @JsonIgnoreProperties({"category"})
-    private List<Task> tasks;
+    // @OneToMany(mappedBy = "category")
+    // @JsonIgnoreProperties({"category"})
+    // private List<Task> tasks;
 
     @Column
     private String type;
@@ -30,13 +30,13 @@ public class Category extends BaseEntity{
         this.type = type;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
-    }
+    // public List<Task> getTasks() {
+    //     return tasks;
+    // }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
+    // public void setTasks(List<Task> tasks) {
+    //     this.tasks = tasks;
+    // }
 
     
 }
