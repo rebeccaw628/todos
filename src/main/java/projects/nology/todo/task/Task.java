@@ -21,7 +21,10 @@ public class Task extends BaseEntity {
     private LocalDate dueDate;
 
     @Column
-    private LocalDate completedAt;
+    private boolean isCompleted;
+    
+    @Column
+    private boolean isArchived;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
@@ -43,14 +46,6 @@ public class Task extends BaseEntity {
         this.dueDate = dueDate;
     }
 
-    public LocalDate getCompletedAt() {
-        return completedAt;
-    }
-
-    public void setCompletedAt(LocalDate completedAt) {
-        this.completedAt = completedAt;
-    }
-
     public Category getCategory() {
         return category;
     }
@@ -59,4 +54,21 @@ public class Task extends BaseEntity {
         this.category = category;
     }
 
+    public boolean getisCompleted() {
+        return isCompleted;
+    }
+
+    public void setisCompleted(boolean isCompleted) {
+        this.isCompleted = isCompleted;
+    }
+
+    public boolean getisArchived() {
+        return isArchived;
+    }
+
+    public void setisArchived(boolean isArchived) {
+        this.isArchived = isArchived;
+    }
+
+    
 }

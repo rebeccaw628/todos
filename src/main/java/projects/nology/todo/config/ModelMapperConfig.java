@@ -40,7 +40,7 @@ public class ModelMapperConfig {
 
     private class StringToLocalDateConverter implements Converter<String, LocalDate> {
 
-        private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mmm-yyyy");
+        private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         @Override
         public LocalDate convert(MappingContext<String, LocalDate> context) {
