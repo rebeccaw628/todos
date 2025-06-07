@@ -15,9 +15,9 @@ import projects.nology.todo.task.Task;
 @Table(name = "categories")
 public class Category extends BaseEntity{
     
-    // @OneToMany(mappedBy = "category")
-    // @JsonIgnoreProperties({"category"})
-    // private List<Task> tasks;
+    @OneToMany(mappedBy = "category")
+    @JsonIgnoreProperties({"category"})
+    private List<Task> tasks;
 
     @Column
     private String type;

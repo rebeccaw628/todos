@@ -50,8 +50,8 @@ public class Task extends BaseEntity {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(Category existingCategory) {
+        this.category = existingCategory;
     }
 
     public boolean getisCompleted() {

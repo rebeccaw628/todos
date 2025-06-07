@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-    Optional<Category> findByType(String type);
+    boolean existsByTypeIgnoreCase(String type);
+
+    Optional<Category> findByTypeIgnoreCase(String type);
     
 }

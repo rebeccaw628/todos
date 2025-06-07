@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  font-size: 30px;
+}
+
+p {
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  border: solid 2px red;
+
+  &_wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  &_details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_duedate {
+    display: inline-flex;
+    // justify-content: center;
+    gap: 5px;
+    align-items: center;
+    font-size: 0.8rem;
+
+    border: solid 2px green;
+  }
+}
+
+#checkbox {
+  border-radius: 50%;
+}
+
+.icons {
+  display: flex;
+  gap: 10px;
+}

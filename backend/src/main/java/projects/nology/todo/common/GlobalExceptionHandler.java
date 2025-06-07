@@ -1,6 +1,6 @@
 package projects.nology.todo.common;
 
-import org.springframework.boot.context.properties.bind.validation.ValidationErrors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,8 +16,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    // @ExceptionHandler(ServiceValidationException.class)
-    // public ResponseEntity<ValidationErrors> handleServiceValidationException(ServiceValidationException ex) {
-    //     return new ResponseEntity<ValidationErrors>(ex.getErrors(), HttpStatus.BAD_REQUEST);
-    // }
+    @ExceptionHandler(ServiceValidationException.class)
+    public ResponseEntity<ValidationErrors> handleServiceValidationException(ServiceValidationException ex) {
+        return new ResponseEntity<ValidationErrors>(ex.getErrors(), HttpStatus.BAD_REQUEST);
+    }
 }

@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import jakarta.validation.Valid;
+import projects.nology.todo.common.ValidationErrors;
+import projects.nology.todo.common.exceptions.ServiceValidationException;
+
 
 @Service
 public class CategoryService {
@@ -19,13 +21,24 @@ public class CategoryService {
         this.modelMapper = modelMapper;
     }
 
-    public Category createOrFind(CreateCategoryDTO data) {
-        //is there already a category with the same name? - modelMapper vs setter
-        return this.categoryRepository.findByType(data.getType()).orElseGet(() -> {
-            Category newCategory = new Category();
-            newCategory.setType(data.getType());
-            return this.categoryRepository.save(newCategory);
-        });
+    public Category create(CreateCategoryDTO data) {
+        // ValidationErrors errors = new ValidationErrors();
+        
+        // if (this.categoryRepository.existsByTypeIgnoreCase(data.getType().trim())) {
+        //     errors.add("type", "Category of type " + data.getType() + "already exists.");
+        // }
+
+        if (this.categoryRepository.existsByTypeIgnoreCase(data.getType().trim())) {
+            return null;
+        }
+
+        // if (errors.hasErrors()) {
+        //     throw new ServiceValidationException(errors);
+        // }
+
+        Category newCategory = new Category();
+        newCategory.setType(data.getType());
+        return this.categoryRepository.save(newCategory);
         
     }
 
@@ -35,6 +48,10 @@ public class CategoryService {
 
     private Optional<Category> findById(Long id) {
         return this.categoryRepository.findById(id);
+    }
+
+    public Optional<Category> findByType(String type) {
+        return this.categoryRepository.findByTypeIgnoreCase(type.trim());
     }
 
     public Optional<Category> updateById(Long id, UpdateCategoryDTO data) {

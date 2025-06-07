@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import projects.nology.todo.common.exceptions.NotFoundException;
+import projects.nology.todo.common.exceptions.ServiceValidationException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +32,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@Valid @RequestBody CreateTaskDTO data) {
+    public ResponseEntity<Task> createTask(@Valid @RequestBody CreateTaskDTO data) throws ServiceValidationException {
        Task savedTask = this.taskService.create(data);
        return new ResponseEntity<Task>(savedTask, HttpStatus.CREATED);
     }
