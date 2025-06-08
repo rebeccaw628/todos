@@ -28,7 +28,7 @@ public class CategoryService {
         //     errors.add("type", "Category of type " + data.getType() + "already exists.");
         // }
 
-        if (this.categoryRepository.existsByTypeIgnoreCase(data.getType().trim())) {
+        if (this.categoryRepository.existsByTypeIgnoreCase(data.getType())) {
             return null;
         }
 

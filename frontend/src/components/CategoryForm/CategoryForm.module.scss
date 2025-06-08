@@ -2,3 +2,31 @@
   display: flex;
   justify-content: space-between;
 }
+
+.input {
+  background-color: #d3d1cf;
+  color: #524942;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+}
+.input:focus {
+  background-color: #f0efee;
+}
+
+.add_btn {
+  all: unset;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease-in-out;
+  margin-right: 13px;
+  :hover {
+    color: #eeebeb;
+    // background-color: darken($button-background, 10%);
+    // transform: scale(1.8);
+  }
+  // padding: 10px;
+  // height: 25px;
+  border: solid 2px red;
+}

@@ -9,6 +9,7 @@ import org.modelmapper.spi.MappingContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import projects.nology.todo.category.Category;
 import projects.nology.todo.task.CreateTaskDTO;
 import projects.nology.todo.task.Task;
 
@@ -52,4 +53,16 @@ public class ModelMapperConfig {
         }
         
     }
+
+    // private class StringToCategoryConverter implements Converter<String, Category> {
+
+    //     @Override
+    //     public Category convert(MappingContext<String, Category> context) {
+    //         String type = context.getSource();
+    //         if (type == null || type.isBlank()) {
+    //             type = "Not categorised";
+    //         }
+    //     }
+        
+    // }
 }

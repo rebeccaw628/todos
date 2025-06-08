@@ -14,11 +14,16 @@ interface TasksContextValues {
   setTasks: (tasks: Task[]) => unknown;
   completedCount: number;
   setCompletedCount: (number: number) => unknown;
-  countCompleted: () => unknown;
+  // countCompleted: () => number;
   categories: Category[];
   setCategories: (categories: Category[]) => unknown;
   uncompletedCount: number;
   setUncompletedCount: (number: number) => unknown;
+  activeSidebarItem: number;
+  setActiveSidebarItem: (number: number) => unknown;
+  updateCategories: number;
+  setUpdateCategories: (number: number) => unknown;
+  fetchAllTasks: () => unknown;
 }
 
 const DefaultTasksContextValues: TasksContextValues = {
@@ -26,11 +31,16 @@ const DefaultTasksContextValues: TasksContextValues = {
   setTasks: () => {},
   completedCount: 0,
   setCompletedCount: () => {},
-  countCompleted: () => 0,
+  // countCompleted: () => 0,
   categories: [],
   setCategories: () => {},
   uncompletedCount: 0,
   setUncompletedCount: () => {},
+  activeSidebarItem: -1,
+  setActiveSidebarItem: () => {},
+  updateCategories: 0,
+  setUpdateCategories: () => {},
+  fetchAllTasks: () => [],
 };
 
 export const TasksContext = createContext<TasksContextValues>(
@@ -42,31 +52,40 @@ const TasksContextProvider = ({ children }: TasksContextProviderProps) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [completedCount, setCompletedCount] = useState<number>(0);
   const [uncompletedCount, setUncompletedCount] = useState<number>(0);
+  const [activeSidebarItem, setActiveSidebarItem] = useState<number>(-1);
+  const [updateCategories, setUpdateCategories] = useState<number>(0);
 
   // const [changeTasks, setChangeTasks] = useState
 
-  useEffect(() => {
+  const fetchAllTasks = () => {
     getAllTasks()
-      .then((res) => {
-        setTasks(res);
-        console.log(res);
+      .then((data) => {
+        setTasks(data.filter((task) => !task.isArchived));
+        console.log(data);
       })
       .catch((err) => console.warn(err));
+  };
+
+  useEffect(() => {
+    fetchAllTasks();
   }, []);
 
   useEffect(() => {
     getAllCategories()
-      .then((res) => {
-        setCategories(res);
-        console.log(res);
+      .then((data) => {
+        setCategories(data);
+        console.log(data);
         console.log("fetch categories");
       })
       .catch((err) => console.warn(err));
-  }, []);
+  }, [tasks, updateCategories]);
 
-  const countCompleted = () => {
-    tasks.reduce((count, task) => (task.isCompleted ? (count += 1) : count), 0);
-  };
+  // const countCompleted = () => {
+  //   tasks.reduce((count, task) => {
+  //     task.isCompleted ? (count += 1) : count;
+  //     return count;
+  //   }, 0);
+  // };
 
   return (
     <TasksContext
@@ -75,11 +94,16 @@ const TasksContextProvider = ({ children }: TasksContextProviderProps) => {
         setTasks,
         completedCount,
         setCompletedCount,
-        countCompleted,
+        // countCompleted,
         categories,
         setCategories,
         uncompletedCount,
         setUncompletedCount,
+        activeSidebarItem,
+        setActiveSidebarItem,
+        updateCategories,
+        setUpdateCategories,
+        fetchAllTasks,
       }}
     >
       {children}

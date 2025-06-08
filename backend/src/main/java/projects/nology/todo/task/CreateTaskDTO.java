@@ -1,5 +1,7 @@
 package projects.nology.todo.task;
 
+import java.time.LocalDate;
+
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -18,6 +20,9 @@ public class CreateTaskDTO {
     // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")   
     private String dueDate;
 
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")   
+    // private LocalDate dueDate;
+
     public CreateTaskDTO(@NotBlank String description, @NotBlank String category, String dueDate) {
         this.description = description;
         this.category = category;
@@ -32,8 +37,14 @@ public class CreateTaskDTO {
         return category;
     }
 
+    // public LocalDate getDueDate() {
+    //     return dueDate;
+    // }
+
     public String getDueDate() {
         return dueDate;
     }
+
+
 
 }

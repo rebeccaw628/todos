@@ -1,9 +1,24 @@
-.sidebarItem {
+.active {
   // display: flex;
   // justify-content: space-between;
   display: grid;
   grid-template-columns: 1fr 30px 20px;
   align-items: center;
   padding: 8px 12px;
+  background-color: #c9c9c9;
   border: solid 2px red;
+}
+
+.inactive {
+  display: grid;
+  grid-template-columns: 1fr 30px 20px;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+  border: solid 2px red;
+}
+
+.inactive:hover {
+  background-color: #c9c9c9;
+  // color: #e9fdff;
 }

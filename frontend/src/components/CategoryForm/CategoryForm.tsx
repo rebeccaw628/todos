@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { schema, type CategoryFormData } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import styles from "./CategoryForm.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface CategoryFormProps {
   onFormSubmit: (data: CategoryFormData) => unknown;
@@ -14,23 +16,26 @@ const CategoryForm = ({ onFormSubmit }: CategoryFormProps) => {
     reset,
     formState: { isSubmitSuccessful, errors },
   } = useForm<CategoryFormData>({ resolver: zodResolver(schema) });
+
+  if (isSubmitSuccessful) reset();
+
   return (
     <form className={styles.form} onSubmit={handleSubmit(onFormSubmit)}>
       <div>
         <input
-          className={styles.textInput}
+          className={styles.input}
           id="category"
           type="text"
           {...register("type")}
-          placeholder="Add category"
+          placeholder="ADD CATEGORY"
         />
         {errors.type && (
           <small className={styles.error}>{errors.type.message}</small>
         )}
       </div>
-      <div className={styles.submit}>
-        <button className={styles.submit_btn} type="submit">
-          +
+      <div>
+        <button className={styles.add_btn} type="submit">
+          <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
     </form>
