@@ -5,6 +5,7 @@ import {
   createTask,
   deleteTaskById,
   getTaskById,
+  updateTaskById,
   type Task,
 } from "../../services/tasks-services";
 import styles from "./TaskContainer.module.scss";
@@ -24,6 +25,7 @@ const TaskContainer = () => {
   } = useContext(TasksContext);
   const [displayedTasks, setDisplayedTasks] = useState<Task[]>(tasks);
   const [showForm, setShowForm] = useState<boolean>(false);
+  const [editTaskId, setEditTaskId] = useState<number>(-1);
 
   useEffect(() => {
     console.log(activeSidebarItem);
@@ -46,7 +48,6 @@ const TaskContainer = () => {
   const handleCheck = (id: number) => {
     getTaskById(id);
   };
-  const handleUpdate = () => {};
 
   const handleDuplicate = (task: Task) => {
     console.log("duplicating task");
@@ -78,6 +79,25 @@ const TaskContainer = () => {
     setShowForm(!showForm);
   };
 
+  const handleUpdate = (id: number) => {
+    setEditTaskId(id);
+  };
+
+  const handleSave = (id: number, data: TaskFormData) => {
+    console.log(
+      "saving edited task with new data:" + data.description,
+      data.category,
+      data.dueDate
+    );
+
+    updateTaskById(id, data)
+      .then(() => {
+        fetchAllTasks();
+        setEditTaskId(-1);
+      })
+      .catch((error) => console.warn(error));
+  };
+
   return (
     <div className={styles.tasks_container}>
       <div className={styles.heading_container}>
@@ -90,17 +110,37 @@ const TaskContainer = () => {
           )}
         </button>
       </div>
-      {showForm && <TaskForm onSubmit={handleSubmit} categories={categories} />}
-      {displayedTasks.map((task: Task) => (
-        <TaskItem
-          key={task.id}
-          task={task}
-          onChange={() => handleCheck(task.id)}
-          onUpdate={handleUpdate}
-          onDuplicate={() => handleDuplicate(task)}
-          onDelete={() => handleDelete(task.id)}
+      {showForm && (
+        <TaskForm
+          onSubmit={handleSubmit}
+          categories={categories}
+          formType={"create"}
         />
-      ))}
+      )}
+      {displayedTasks.map((task: Task) =>
+        editTaskId === task.id ? (
+          <TaskForm
+            key={task.id}
+            onSubmit={(data) => handleSave(task.id, data)}
+            categories={categories}
+            existingTask={{
+              description: task.description,
+              category: task.category.type,
+              dueDate: task.dueDate,
+            }}
+            formType={"edit"}
+          />
+        ) : (
+          <TaskItem
+            key={task.id}
+            task={task}
+            onChange={() => handleCheck(task.id)}
+            onUpdate={() => handleUpdate(task.id)}
+            onDuplicate={() => handleDuplicate(task)}
+            onDelete={() => handleDelete(task.id)}
+          />
+        )
+      )}
     </div>
   );
 };

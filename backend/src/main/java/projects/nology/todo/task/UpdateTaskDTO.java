@@ -1,5 +1,7 @@
 package projects.nology.todo.task;
 
+import java.time.LocalDate;
+
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.validation.constraints.Pattern;
@@ -14,7 +16,7 @@ public class UpdateTaskDTO {
     @Pattern(regexp = ".*\\S.*", message = "Title cannot be empty")
     private String category;
 
-    private String dueDate;
+    private LocalDate dueDate;
 
     private Boolean isArchived;
 
@@ -28,7 +30,7 @@ public class UpdateTaskDTO {
         return category;
     }
 
-    public String getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 

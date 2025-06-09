@@ -3,21 +3,35 @@ import { schema, type TaskFormData } from "./schema";
 import styles from "./TaskForm.module.scss";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleCheck,
+  faPlus,
+  faSquarePlus,
+} from "@fortawesome/free-solid-svg-icons";
 import type { Category } from "../../services/categories-services";
 
 interface TaskFormProps {
   onSubmit: (data: TaskFormData) => unknown;
   categories: Category[];
+  formType: String;
+  existingTask?: TaskFormData;
 }
 
-const TaskForm = ({ onSubmit, categories }: TaskFormProps) => {
+const TaskForm = ({
+  onSubmit,
+  categories,
+  formType,
+  existingTask,
+}: TaskFormProps) => {
   const {
     handleSubmit,
     register,
     reset,
     formState: { isSubmitSuccessful, errors },
-  } = useForm<TaskFormData>({ resolver: zodResolver(schema) });
+  } = useForm<TaskFormData>({
+    resolver: zodResolver(schema),
+    defaultValues: existingTask,
+  });
 
   if (isSubmitSuccessful) reset();
 
@@ -60,7 +74,9 @@ const TaskForm = ({ onSubmit, categories }: TaskFormProps) => {
       </div>
       <div>
         <button className={styles.add_btn} type="submit">
-          <FontAwesomeIcon icon={faSquarePlus} />
+          <FontAwesomeIcon
+            icon={formType === "create" ? faSquarePlus : faCircleCheck}
+          />
         </button>
       </div>
     </form>

@@ -71,7 +71,7 @@ public class TaskService {
     }
 
     public boolean deleteById(Long id) {
-        Optional<Task> foundTask = this.findById(id);
+        Optional<Task> foundTask = this.taskRepository.findById(id);
         if (foundTask.isEmpty()) {
             return false;
         }
@@ -82,19 +82,37 @@ public class TaskService {
         return true;
     }
 
+    // public Task updateTaskById(Long id, UpdateTaskDTO data) {
+    //    Task foundTask = this.taskRepository.getReferenceById(id);
+
+    //     // Task taskFromDb = foundTask.get();
+
+    //     this.modelMapper.map(data, foundTask);
+    //     this.taskRepository.save(foundTask);
+    //     return foundTask;
+    // }
+
     public Optional<Task> updateTaskById(Long id, UpdateTaskDTO data) {
         Optional<Task> foundTask = this.findById(id);
 
         if (foundTask.isEmpty()) {
-            return foundTask;
+            return Optional.empty();
         }
 
         Task taskFromDb = foundTask.get();
-
         this.modelMapper.map(data, taskFromDb);
+
+        if (data.getCategory() != null) {
+            Category category = categoryService.getByType(data.getCategory());
+            taskFromDb.setCategory(category);
+        }
         this.taskRepository.save(taskFromDb);
         return Optional.of(taskFromDb);
     }
+
+    // private Task getById(Long id) {
+    //     return taskRepository.getReferenceById(id);
+    // }
 
     public List<Task> findByCategory(String category) {
         return taskRepository.findByCategory_TypeIgnoreCase(category);

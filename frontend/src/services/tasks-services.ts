@@ -16,7 +16,9 @@ export interface Task {
 interface UpdateTask {
   description?: string;
   dueDate?: string;
-  category?: Category;
+  category?: string;
+  isArchived?: boolean;
+  isCompleted?: boolean;
 }
 
 export const getAllTasks = async (): Promise<Task[]> => {
@@ -38,9 +40,10 @@ export const getTaskById = async (id: number): Promise<Task> => {
 export const updateTaskById = async (
   id: number,
   data: UpdateTask
+  // data: UpdateTask
 ): Promise<Task> => {
   const response = await fetch(`${baseURL}/tasks/${id}`, {
-    method: "POST",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
