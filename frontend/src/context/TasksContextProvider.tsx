@@ -11,7 +11,8 @@ interface TasksContextProviderProps {
 
 interface TasksContextValues {
   tasks: Task[];
-  setTasks: (tasks: Task[]) => unknown;
+  // setTasks: (tasks: Task[]) => unknown;
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   completedCount: number;
   setCompletedCount: (number: number) => unknown;
   // countCompleted: () => number;

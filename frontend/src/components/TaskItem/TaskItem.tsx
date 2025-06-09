@@ -12,6 +12,7 @@ import { TasksContext } from "../../context/TasksContextProvider";
 
 interface TaskItemProps {
   task: Task;
+  completedTasks: number[];
   onChange?: () => unknown;
   onUpdate: () => unknown;
   onDuplicate: () => unknown;
@@ -20,6 +21,7 @@ interface TaskItemProps {
 
 const TaskItem = ({
   task,
+  completedTasks,
   onChange,
   onUpdate,
   onDuplicate,
@@ -32,14 +34,14 @@ const TaskItem = ({
           <input
             className={styles.checkbox}
             type="checkbox"
-            checked={task.isCompleted}
+            checked={completedTasks && completedTasks.includes(task.id)}
             id="checkbox"
-            onChange={() => onChange}
+            onChange={onChange}
           ></input>
-          <div className={styles.content_details}>
-            <p>{task.description}</p>
+          <div className={styles.task}>
+            <p className={styles.task_text}>{task.description}</p>
             {task.dueDate && (
-              <div className={styles.content_duedate}>
+              <div className={styles.task_duedate}>
                 <FontAwesomeIcon icon={faCalendar} />
                 <p>{task.dueDate}</p>
               </div>

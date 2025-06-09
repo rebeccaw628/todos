@@ -4,6 +4,7 @@ import TaskItem from "../../components/TaskItem/TaskItem";
 import {
   createTask,
   deleteTaskById,
+  getAllTasks,
   getTaskById,
   updateTaskById,
   type Task,
@@ -26,6 +27,7 @@ const TaskContainer = () => {
   const [displayedTasks, setDisplayedTasks] = useState<Task[]>(tasks);
   const [showForm, setShowForm] = useState<boolean>(false);
   const [editTaskId, setEditTaskId] = useState<number>(-1);
+  const [completed, setCompleted] = useState<number[]>([]);
 
   useEffect(() => {
     console.log(activeSidebarItem);
@@ -45,8 +47,27 @@ const TaskContainer = () => {
       setDisplayedTasks(newDisplay);
     }
   }, [activeSidebarItem, tasks]);
+
   const handleCheck = (id: number) => {
-    getTaskById(id);
+    if (completed.includes(id)) {
+      console.log("unchecking task");
+      setCompleted((prev) => prev.filter((completedId) => completedId != id));
+    } else {
+      console.log("checking a completed task");
+      setCompleted([...completed, id]);
+    }
+
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? { ...task, isCompleted: !task.isCompleted } : task
+      )
+    );
+    const taskToUpdate = tasks.find((task) => task.id === id);
+    console.log("task to update:");
+    console.log(taskToUpdate);
+    updateTaskById(id, { isCompleted: !taskToUpdate?.isCompleted })
+      .then(() => fetchAllTasks())
+      .catch((error) => console.warn(error));
   };
 
   const handleDuplicate = (task: Task) => {
@@ -98,6 +119,21 @@ const TaskContainer = () => {
       .catch((error) => console.warn(error));
   };
 
+  useEffect(() => {
+    const fetchCompleted = async () => {
+      try {
+        const data = await getAllTasks();
+        const checkedTasks = data
+          .filter((task) => task.isCompleted)
+          .map((task) => task.id);
+        setCompleted(checkedTasks);
+      } catch (error) {
+        console.warn(error);
+      }
+    };
+    fetchCompleted();
+  }, []);
+
   return (
     <div className={styles.tasks_container}>
       <div className={styles.heading_container}>
@@ -134,6 +170,7 @@ const TaskContainer = () => {
           <TaskItem
             key={task.id}
             task={task}
+            completedTasks={completed}
             onChange={() => handleCheck(task.id)}
             onUpdate={() => handleUpdate(task.id)}
             onDuplicate={() => handleDuplicate(task)}
