@@ -1,6 +1,18 @@
 .form {
   display: flex;
   justify-content: space-between;
+  margin-top: 5px;
+}
+
+.text_error_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.error {
+  color: rgb(163, 64, 64);
+  font-weight: 600;
 }
 
 .input {
@@ -22,11 +34,6 @@
   transition: transform 0.2s ease-in-out;
   margin-right: 13px;
   :hover {
-    color: #eeebeb;
-    // background-color: darken($button-background, 10%);
-    // transform: scale(1.8);
+    color: #524942;
   }
-  // padding: 10px;
-  // height: 25px;
-  border: solid 2px red;
 }

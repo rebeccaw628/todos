@@ -1,9 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { Category } from "../../services/categories-services";
 import styles from "./SideBarItem.module.scss";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import { useContext } from "react";
-import { TasksContext } from "../../context/TasksContextProvider";
 
 interface SideBarItemProps {
   title: string;
@@ -19,7 +16,6 @@ const SideBarItem = ({
   title,
   number,
   icon,
-  index,
   active,
   onClick,
   onDelete,

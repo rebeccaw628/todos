@@ -5,57 +5,35 @@ import {
   createCategory,
   deleteAllCategories,
   deleteCategoryById,
-  getAllCategories,
-  type Category,
 } from "../../services/categories-services";
 import styles from "./SideBarContainer.module.scss";
 import { TasksContext } from "../../context/TasksContextProvider";
 import {
-  faBarChart,
   faCircleCheck,
   faCircleXmark,
-  faListAlt,
 } from "@fortawesome/free-regular-svg-icons";
 import SideBarItem from "../../components/SideBarItem/SideBarItem";
 import { faBarsProgress } from "@fortawesome/free-solid-svg-icons";
-import {
-  getAllTasks,
-  updateTaskById,
-  type Task,
-} from "../../services/tasks-services";
+import { type Task } from "../../services/tasks-services";
 
 const SideBarContainer = () => {
   const {
     tasks,
     setTasks,
     categories,
-    setCategories,
     activeSidebarItem,
     setActiveSidebarItem,
-    setUpdateCategories,
-    completedCount,
-    setCompletedCount,
-    uncompletedCount,
-    setUncompletedCount,
-    // countCompleted,
+    fetchAllCategories,
   } = useContext(TasksContext);
   const [categoryCounts, setCategoryCounts] = useState<CountObj>({});
 
-  //FIX
   const handleSubmit = async (data: CategoryFormData) => {
     try {
       await createCategory(data);
-      await fetchCategories();
+      await fetchAllCategories();
     } catch (error: any) {
       console.warn(error.message);
-      console.log(error.message);
     }
-  };
-
-  const fetchCategories = async () => {
-    getAllCategories()
-      .then((data) => setCategories(data))
-      .catch((error) => console.warn(error));
   };
 
   interface CountObj {
@@ -70,7 +48,6 @@ const SideBarContainer = () => {
       {} as CountObj
     );
     setCategoryCounts(countByType);
-    // setCompletedCount(countCompleted());
   }, [tasks, categories]);
 
   const handleClick = (number: number) => {
@@ -105,7 +82,8 @@ const SideBarContainer = () => {
     if (confirmed) {
       deleteCategoryById(id)
         .then(() => {
-          setUpdateCategories(-1);
+          fetchAllCategories();
+          setActiveSidebarItem(-1);
         })
         .catch((e) => {
           console.warn(e);

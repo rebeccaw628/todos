@@ -15,16 +15,14 @@ interface TasksContextValues {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   completedCount: number;
   setCompletedCount: (number: number) => unknown;
-  // countCompleted: () => number;
   categories: Category[];
   setCategories: (categories: Category[]) => unknown;
   uncompletedCount: number;
   setUncompletedCount: (number: number) => unknown;
   activeSidebarItem: number;
   setActiveSidebarItem: (number: number) => unknown;
-  updateCategories: number;
-  setUpdateCategories: (number: number) => unknown;
   fetchAllTasks: () => unknown;
+  fetchAllCategories: () => unknown;
 }
 
 const DefaultTasksContextValues: TasksContextValues = {
@@ -39,9 +37,8 @@ const DefaultTasksContextValues: TasksContextValues = {
   setUncompletedCount: () => {},
   activeSidebarItem: -1,
   setActiveSidebarItem: () => {},
-  updateCategories: 0,
-  setUpdateCategories: () => {},
   fetchAllTasks: () => [],
+  fetchAllCategories: () => [],
 };
 
 export const TasksContext = createContext<TasksContextValues>(
@@ -54,9 +51,6 @@ const TasksContextProvider = ({ children }: TasksContextProviderProps) => {
   const [completedCount, setCompletedCount] = useState<number>(0);
   const [uncompletedCount, setUncompletedCount] = useState<number>(0);
   const [activeSidebarItem, setActiveSidebarItem] = useState<number>(-1);
-  const [updateCategories, setUpdateCategories] = useState<number>(0);
-
-  // const [changeTasks, setChangeTasks] = useState
 
   const fetchAllTasks = () => {
     getAllTasks()
@@ -71,7 +65,7 @@ const TasksContextProvider = ({ children }: TasksContextProviderProps) => {
     fetchAllTasks();
   }, []);
 
-  useEffect(() => {
+  const fetchAllCategories = () => {
     getAllCategories()
       .then((data) => {
         setCategories(data);
@@ -79,14 +73,21 @@ const TasksContextProvider = ({ children }: TasksContextProviderProps) => {
         console.log("fetch categories");
       })
       .catch((err) => console.warn(err));
-  }, [tasks, updateCategories]);
+  };
 
-  // const countCompleted = () => {
-  //   tasks.reduce((count, task) => {
-  //     task.isCompleted ? (count += 1) : count;
-  //     return count;
-  //   }, 0);
-  // };
+  useEffect(() => {
+    fetchAllCategories();
+  }, [tasks]);
+
+  // useEffect(() => {
+  //   getAllCategories()
+  //     .then((data) => {
+  //       setCategories(data);
+  //       console.log(data);
+  //       console.log("fetch categories");
+  //     })
+  //     .catch((err) => console.warn(err));
+  // }, [tasks, updateCategories]);
 
   return (
     <TasksContext
@@ -102,9 +103,8 @@ const TasksContextProvider = ({ children }: TasksContextProviderProps) => {
         setUncompletedCount,
         activeSidebarItem,
         setActiveSidebarItem,
-        updateCategories,
-        setUpdateCategories,
         fetchAllTasks,
+        fetchAllCategories,
       }}
     >
       {children}

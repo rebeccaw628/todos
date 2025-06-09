@@ -5,7 +5,6 @@ import {
   createTask,
   deleteTaskById,
   getAllTasks,
-  getTaskById,
   updateTaskById,
   type Task,
 } from "../../services/tasks-services";
@@ -16,14 +15,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const TaskContainer = () => {
-  const {
-    tasks,
-    setTasks,
-    activeSidebarItem,
-    categories,
-    setUpdateCategories,
-    fetchAllTasks,
-  } = useContext(TasksContext);
+  const { tasks, setTasks, activeSidebarItem, categories, fetchAllTasks } =
+    useContext(TasksContext);
   const [displayedTasks, setDisplayedTasks] = useState<Task[]>(tasks);
   const [showForm, setShowForm] = useState<boolean>(false);
   const [editTaskId, setEditTaskId] = useState<number>(-1);
@@ -31,7 +24,7 @@ const TaskContainer = () => {
 
   useEffect(() => {
     console.log(activeSidebarItem);
-    //update tasks when category changes
+    //update tasks display when category changes
     if (activeSidebarItem === -1) {
       setDisplayedTasks(tasks);
     } else if (activeSidebarItem > 0) {
@@ -153,31 +146,33 @@ const TaskContainer = () => {
           formType={"create"}
         />
       )}
-      {displayedTasks.map((task: Task) =>
-        editTaskId === task.id ? (
-          <TaskForm
-            key={task.id}
-            onSubmit={(data) => handleSave(task.id, data)}
-            categories={categories}
-            existingTask={{
-              description: task.description,
-              category: task.category.type,
-              dueDate: task.dueDate,
-            }}
-            formType={"edit"}
-          />
-        ) : (
-          <TaskItem
-            key={task.id}
-            task={task}
-            completedTasks={completed}
-            onChange={() => handleCheck(task.id)}
-            onUpdate={() => handleUpdate(task.id)}
-            onDuplicate={() => handleDuplicate(task)}
-            onDelete={() => handleDelete(task.id)}
-          />
-        )
-      )}
+      <div className={styles.task_display}>
+        {displayedTasks.map((task: Task) =>
+          editTaskId === task.id ? (
+            <TaskForm
+              key={task.id}
+              onSubmit={(data) => handleSave(task.id, data)}
+              categories={categories}
+              existingTask={{
+                description: task.description,
+                category: task.category.type,
+                dueDate: task.dueDate,
+              }}
+              formType={"edit"}
+            />
+          ) : (
+            <TaskItem
+              key={task.id}
+              task={task}
+              completedTasks={completed}
+              onChange={() => handleCheck(task.id)}
+              onUpdate={() => handleUpdate(task.id)}
+              onDuplicate={() => handleDuplicate(task)}
+              onDelete={() => handleDelete(task.id)}
+            />
+          )
+        )}
+      </div>
     </div>
   );
 };

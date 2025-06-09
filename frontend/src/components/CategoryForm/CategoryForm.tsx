@@ -21,7 +21,7 @@ const CategoryForm = ({ onFormSubmit }: CategoryFormProps) => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onFormSubmit)}>
-      <div>
+      <div className={styles.text_error_wrapper}>
         <input
           className={styles.input}
           id="category"
