@@ -48,9 +48,17 @@ const TaskContainer = () => {
   };
   const handleUpdate = () => {};
 
-  const handleDuplicate = () => {
-    // createTask();
+  const handleDuplicate = (task: Task) => {
+    console.log("duplicating task");
+    const transformedData = transformData(task);
+    handleSubmit(transformedData);
   };
+
+  const transformData = (data: Task) => ({
+    description: data.description,
+    category: data.category.type,
+    dueDate: data.dueDate,
+  });
 
   const handleDelete = (id: number) => {
     console.log("deleting task" + id);
@@ -72,7 +80,6 @@ const TaskContainer = () => {
 
   return (
     <div className={styles.tasks_container}>
-      {/* <div className={styles.inner_container}> */}
       <div className={styles.heading_container}>
         <h1>MY TODO LIST</h1>
         <button onClick={toggle} className={styles.toggle}>
@@ -90,11 +97,10 @@ const TaskContainer = () => {
           task={task}
           onChange={() => handleCheck(task.id)}
           onUpdate={handleUpdate}
-          onDuplicate={handleDuplicate}
+          onDuplicate={() => handleDuplicate(task)}
           onDelete={() => handleDelete(task.id)}
         />
       ))}
-      {/* </div> */}
     </div>
   );
 };
