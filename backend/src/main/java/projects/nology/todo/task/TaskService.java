@@ -25,20 +25,42 @@ public class TaskService {
         this.categoryService = categoryService;
     }
 
-    public Task create(CreateTaskDTO data) throws ServiceValidationException {
+    // public Task create(CreateTaskDTO data) throws ServiceValidationException {
+
+    //     Task newTask = modelMapper.map(data, Task.class);
+    //     Category category = categoryService.getById(data.getCategoryId());
+
+    //     newTask.setCategory(category);
+    //     Task savedTask = this.taskRepository.save(newTask);
+    //     return savedTask;
+    // }
+
+       public Task create(CreateTaskDTO data) throws ServiceValidationException {
 
         Task newTask = modelMapper.map(data, Task.class);
-        Optional<Category> existingCategory = this.categoryService.findByType(data.getCategory());
-
-        Category category = existingCategory.orElseGet(() -> {
-            CreateCategoryDTO chosenCategory = new CreateCategoryDTO(data.getCategory());
-            return this.categoryService.create(chosenCategory);
-        });
+        Category category = categoryService.getByType(data.getCategory());
 
         newTask.setCategory(category);
         Task savedTask = this.taskRepository.save(newTask);
         return savedTask;
     }
+    
+    
+
+    // public Task create(CreateTaskDTO data) throws ServiceValidationException {
+
+    //     Task newTask = modelMapper.map(data, Task.class);
+    //     Optional<Category> existingCategory = this.categoryService.findByType(data.getCategory());
+
+    //     Category category = existingCategory.orElseGet(() -> {
+    //         CreateCategoryDTO chosenCategory = new CreateCategoryDTO(data.getCategory());
+    //         return this.categoryService.create(chosenCategory);
+    //     });
+
+    //     newTask.setCategory(category);
+    //     Task savedTask = this.taskRepository.save(newTask);
+    //     return savedTask;
+    // }
 
     public List<Task> findAll() {
         return this.taskRepository.findAll();

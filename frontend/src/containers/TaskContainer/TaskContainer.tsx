@@ -9,6 +9,9 @@ import {
 } from "../../services/tasks-services";
 import styles from "./TaskContainer.module.scss";
 import TaskForm from "../../components/TaskForm/TaskForm";
+import type { TaskFormData } from "../../components/TaskForm/schema";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const TaskContainer = () => {
   const {
@@ -20,6 +23,7 @@ const TaskContainer = () => {
     fetchAllTasks,
   } = useContext(TasksContext);
   const [displayedTasks, setDisplayedTasks] = useState<Task[]>(tasks);
+  const [showForm, setShowForm] = useState<boolean>(false);
 
   useEffect(() => {
     console.log(activeSidebarItem);
@@ -45,7 +49,7 @@ const TaskContainer = () => {
   const handleUpdate = () => {};
 
   const handleDuplicate = () => {
-    createTask();
+    // createTask();
   };
 
   const handleDelete = (id: number) => {
@@ -55,13 +59,31 @@ const TaskContainer = () => {
       .catch((error) => console.warn(error));
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = (data: TaskFormData) => {
+    console.log("creating new task:" + data.description);
+    createTask(data)
+      .then(() => fetchAllTasks())
+      .catch((error) => console.warn(error));
+  };
+
+  const toggle = () => {
+    setShowForm(!showForm);
+  };
 
   return (
     <div className={styles.tasks_container}>
       {/* <div className={styles.inner_container}> */}
-      <h1>MY TODO LIST</h1>
-      <TaskForm onSubmit={handleSubmit} categories={categories} />
+      <div className={styles.heading_container}>
+        <h1>MY TODO LIST</h1>
+        <button onClick={toggle} className={styles.toggle}>
+          {showForm ? (
+            <FontAwesomeIcon icon={faCircleXmark} />
+          ) : (
+            <FontAwesomeIcon icon={faPlus} />
+          )}
+        </button>
+      </div>
+      {showForm && <TaskForm onSubmit={handleSubmit} categories={categories} />}
       {displayedTasks.map((task: Task) => (
         <TaskItem
           key={task.id}

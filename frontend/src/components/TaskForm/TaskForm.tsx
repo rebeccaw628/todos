@@ -3,7 +3,7 @@ import { schema, type TaskFormData } from "./schema";
 import styles from "./TaskForm.module.scss";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 import type { Category } from "../../services/categories-services";
 
 interface TaskFormProps {
@@ -40,20 +40,27 @@ const TaskForm = ({ onSubmit, categories }: TaskFormProps) => {
         </div>
       </div>
       <div>
-        <select defaultValue="">
+        <select
+          defaultValue=""
+          id="category"
+          {...register("category", { required: true })}
+        >
           <option value="" disabled>
             Select a category
           </option>
           {categories.map((category) => (
-            <option key={category.id} value={category.id}>
+            <option key={category.id} value={category.type}>
               {category.type}
             </option>
           ))}
         </select>
+        {errors.category && (
+          <small className={styles.error}>{errors.category.message}</small>
+        )}
       </div>
       <div>
         <button className={styles.add_btn} type="submit">
-          <FontAwesomeIcon icon={faPlus} />
+          <FontAwesomeIcon icon={faSquarePlus} />
         </button>
       </div>
     </form>

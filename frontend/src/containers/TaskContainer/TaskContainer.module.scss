@@ -10,7 +10,22 @@ h1 {
   width: 70%;
 }
 
-// .inner_container {
-//   background-color: #f5f5f5;
-//   height: 100%;
-// }
+.heading_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.toggle {
+  all: unset;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease-in-out;
+  margin-right: 13px;
+  // border: solid 1px #524942;
+  // border-radius: 20px;
+  :hover {
+    color: #524942;
+    // background-color: darken($button-background, 10%);
+    // transform: scale(1.8);
+  }
+}

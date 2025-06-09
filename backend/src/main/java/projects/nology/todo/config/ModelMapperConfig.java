@@ -21,9 +21,9 @@ public class ModelMapperConfig {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setSkipNullEnabled(true);
         modelMapper.typeMap(String.class, String.class).setConverter(new StringTrimConverter());
-        modelMapper.typeMap(CreateTaskDTO.class, Task.class)
-                    .addMappings(mapper -> mapper.using(new StringToLocalDateConverter())
-                    .map(CreateTaskDTO::getDueDate,Task::setDueDate));
+        // modelMapper.typeMap(CreateTaskDTO.class, Task.class)
+        //             .addMappings(mapper -> mapper.using(new StringToLocalDateConverter())
+        //             .map(CreateTaskDTO::getDueDate,Task::setDueDate));
         return modelMapper;
     }
 

@@ -63,6 +63,7 @@ export const deleteTaskById = async (id: number) => {
 };
 
 export const createTask = async (data: TaskFormData) => {
+  console.log("create task");
   const response = await fetch(`${baseURL}/tasks`, {
     method: "POST",
     body: JSON.stringify(data),

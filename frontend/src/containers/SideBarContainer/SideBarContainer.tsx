@@ -41,6 +41,7 @@ const SideBarContainer = () => {
   } = useContext(TasksContext);
   const [categoryCounts, setCategoryCounts] = useState<CountObj>({});
 
+  //FIX
   const handleSubmit = async (data: CategoryFormData) => {
     try {
       await createCategory(data);

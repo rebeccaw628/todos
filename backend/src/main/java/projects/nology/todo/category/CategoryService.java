@@ -46,7 +46,7 @@ public class CategoryService {
         return this.categoryRepository.findAll();
     }
 
-    private Optional<Category> findById(Long id) {
+    public Optional<Category> findById(Long id) {
         return this.categoryRepository.findById(id);
     }
 
@@ -78,5 +78,15 @@ public class CategoryService {
         this.categoryRepository.delete(categoryFromDb);
         return true;       
     }
+
+    public Category getById(Long id) {
+        return this.categoryRepository.getReferenceById(id);
+    }
+
+    public Category getByType(String category) {
+        return this.categoryRepository.getByType(category);
+    }
+
+
 
 }
