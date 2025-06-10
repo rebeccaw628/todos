@@ -1,5 +1,6 @@
 package projects.nology.todo.task;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import jakarta.validation.Valid;
 import projects.nology.todo.category.Category;
 import projects.nology.todo.category.CategoryService;
 import projects.nology.todo.category.CreateCategoryDTO;
+import projects.nology.todo.common.ValidationErrors;
 import projects.nology.todo.common.exceptions.ServiceValidationException;
 
 @Service
@@ -39,7 +41,6 @@ public class TaskService {
 
         Task newTask = modelMapper.map(data, Task.class);
         Category category = categoryService.getByType(data.getCategory());
-
         newTask.setCategory(category);
         Task savedTask = this.taskRepository.save(newTask);
         return savedTask;
@@ -92,20 +93,36 @@ public class TaskService {
     //     return foundTask;
     // }
 
-    public Optional<Task> updateTaskById(Long id, UpdateTaskDTO data) {
+    public Optional<Task> updateTaskById(Long id, UpdateTaskDTO data) throws ServiceValidationException {
+          
         Optional<Task> foundTask = this.findById(id);
 
         if (foundTask.isEmpty()) {
-            return Optional.empty();
+            return foundTask;
         }
 
         Task taskFromDb = foundTask.get();
         this.modelMapper.map(data, taskFromDb);
 
+        ValidationErrors validationErrors = new ValidationErrors();
+
+        // If category field is updated, set new category
         if (data.getCategory() != null) {
             Category category = categoryService.getByType(data.getCategory());
             taskFromDb.setCategory(category);
         }
+
+        // If due date is before current date, add error
+        if (data.getDueDate() != null) {
+            if (data.getDueDate().isBefore(LocalDate.now())) {
+                validationErrors.add("dueDate", "Due date cannot be before today's date");
+            }
+        }
+
+        if (validationErrors.hasErrors()) {
+            throw new ServiceValidationException(validationErrors);
+        }
+
         this.taskRepository.save(taskFromDb);
         return Optional.of(taskFromDb);
     }

@@ -68,7 +68,7 @@ public class TaskController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<Task> updateTaskById(@PathVariable Long id, @Valid @RequestBody UpdateTaskDTO data) throws NotFoundException {
+    public ResponseEntity<Task> updateTaskById(@PathVariable Long id, @Valid @RequestBody UpdateTaskDTO data) throws NotFoundException, ServiceValidationException {
         Optional<Task> result = this.taskService.updateTaskById(id, data);
         Task updatedTask = result.orElseThrow(() -> new NotFoundException("Task with id " + id + "does not exist"));
         return new ResponseEntity<>(updatedTask, HttpStatus.OK);

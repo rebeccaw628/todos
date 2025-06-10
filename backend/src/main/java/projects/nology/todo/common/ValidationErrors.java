@@ -14,7 +14,7 @@ public class ValidationErrors {
     }
 
     public boolean hasErrors() {
-        return this.errors.isEmpty();
+        return !this.errors.isEmpty();
     }
 
     // public void add(String field, String message) {

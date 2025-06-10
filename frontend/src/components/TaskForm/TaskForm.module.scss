@@ -60,3 +60,9 @@
   font-size: 1.5rem;
   margin-left: 8px;
 }
+
+.wrapper_test {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr auto auto;
+  border: soldi 2px red;
+}

@@ -46,9 +46,14 @@ const TaskForm = ({
             <small className={styles.error}>{errors.description.message}</small>
           )}
         </div>
-        <div className={styles.form_duedate}>
-          <label htmlFor="dueDate">Due date (Optional): </label>
-          <input type="date" id="dueDate" {...register("dueDate")} />
+        <div className={styles.text_error_wrapper}>
+          <div className={styles.form_duedate}>
+            <label htmlFor="dueDate">Due date (Optional): </label>
+            <input type="date" id="dueDate" {...register("dueDate")} />
+          </div>
+          {errors.dueDate && (
+            <small className={styles.error}>{errors.dueDate.message}</small>
+          )}
         </div>
       </div>
       <div>

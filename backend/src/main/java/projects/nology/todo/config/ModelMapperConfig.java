@@ -39,29 +39,17 @@ public class ModelMapperConfig {
         
     }
 
-    private class StringToLocalDateConverter implements Converter<String, LocalDate> {
+    // private class StringToLocalDateConverter implements Converter<String, LocalDate> {
 
-        private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-        @Override
-        public LocalDate convert(MappingContext<String, LocalDate> context) {
-            if (context.getSource() == null || context.getSource().isBlank()) {
-                return null;
-            }
-            return LocalDate.parse(context.getSource(), formatter);
-            
-        }
-        
-    }
-
-    // private class StringToCategoryConverter implements Converter<String, Category> {
+    //     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     //     @Override
-    //     public Category convert(MappingContext<String, Category> context) {
-    //         String type = context.getSource();
-    //         if (type == null || type.isBlank()) {
-    //             type = "Not categorised";
+    //     public LocalDate convert(MappingContext<String, LocalDate> context) {
+    //         if (context.getSource() == null || context.getSource().isBlank()) {
+    //             return null;
     //         }
+    //         return LocalDate.parse(context.getSource(), formatter);
+            
     //     }
         
     // }

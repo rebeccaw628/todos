@@ -11,6 +11,7 @@ import projects.nology.todo.common.exceptions.ServiceValidationException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> handleNotFoundException(NotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
