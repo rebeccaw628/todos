@@ -1,5 +1,6 @@
 package projects.nology.todo.category;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,23 +22,21 @@ public class CategoryService {
         this.modelMapper = modelMapper;
     }
 
-    public Category create(CreateCategoryDTO data) {
-        // ValidationErrors errors = new ValidationErrors();
-        
-        // if (this.categoryRepository.existsByTypeIgnoreCase(data.getType().trim())) {
-        //     errors.add("type", "Category of type " + data.getType() + "already exists.");
-        // }
+    public Category create(CreateCategoryDTO data) throws ServiceValidationException {
+        ValidationErrors errors = new ValidationErrors();
 
-        if (this.categoryRepository.existsByTypeIgnoreCase(data.getType())) {
-            return null;
+        if (data.getType() == null  || data.getType().isEmpty()) {
+            errors.add("type", "Category type cannot be empty");
+            throw new ServiceValidationException(errors);
         }
 
-        // if (errors.hasErrors()) {
-        //     throw new ServiceValidationException(errors);
-        // }
+        if (this.categoryRepository.existsByTypeIgnoreCase(data.getType().trim())) {
+            errors.add("type", "Category of type '" + data.getType() + "' already exists.");
+            throw new ServiceValidationException(errors);
+            
+        }
 
-        Category newCategory = new Category();
-        newCategory.setType(data.getType());
+        Category newCategory = this.modelMapper.map(data,Category.class);
         return this.categoryRepository.save(newCategory);
         
     }
@@ -64,6 +63,7 @@ public class CategoryService {
         Category categoryFromDb = foundCategory.get();
 
         this.modelMapper.map(data, categoryFromDb);
+        categoryFromDb.setUpdatedAt(new Date());
         this.categoryRepository.save(categoryFromDb);
         return Optional.of(categoryFromDb);
 
@@ -74,19 +74,12 @@ public class CategoryService {
         if (foundCategory.isEmpty()) {
             return false;
         }
-        Category categoryFromDb = foundCategory.get();
-        this.categoryRepository.delete(categoryFromDb);
+        this.categoryRepository.deleteById(id);
         return true;       
-    }
-
-    public Category getById(Long id) {
-        return this.categoryRepository.getReferenceById(id);
     }
 
     public Category getByType(String category) {
         return this.categoryRepository.getByType(category);
     }
-
-
 
 }

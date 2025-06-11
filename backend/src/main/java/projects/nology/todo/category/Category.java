@@ -25,6 +25,10 @@ public class Category extends BaseEntity{
     @Column
     private String type;
 
+    public void addTask(Task task) {
+        tasks.add(task);
+    }
+
     public String getType() {
         return type;
     }

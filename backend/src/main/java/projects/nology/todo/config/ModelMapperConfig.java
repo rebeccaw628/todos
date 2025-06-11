@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import projects.nology.todo.category.Category;
+import projects.nology.todo.category.CreateCategoryDTO;
 import projects.nology.todo.task.CreateTaskDTO;
 import projects.nology.todo.task.Task;
 
@@ -38,6 +39,18 @@ public class ModelMapperConfig {
         }
         
     }
+
+    // private class CategoryDTOLowerCaseStringConverter implements Converter <String, String> {
+
+    //     @Override
+    //     public String convert(MappingContext<String, String> context) {
+    //         if (context.getSource() == null) {
+    //             return null;
+    //         }
+    //         return context.getSource().trim().toLowerCase();
+    //     }
+
+    // }
 
     // private class StringToLocalDateConverter implements Converter<String, LocalDate> {
 

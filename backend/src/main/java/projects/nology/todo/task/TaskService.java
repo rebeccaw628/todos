@@ -1,6 +1,8 @@
 package projects.nology.todo.task;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,41 +29,25 @@ public class TaskService {
         this.categoryService = categoryService;
     }
 
-    // public Task create(CreateTaskDTO data) throws ServiceValidationException {
-
-    //     Task newTask = modelMapper.map(data, Task.class);
-    //     Category category = categoryService.getById(data.getCategoryId());
-
-    //     newTask.setCategory(category);
-    //     Task savedTask = this.taskRepository.save(newTask);
-    //     return savedTask;
-    // }
-
-       public Task create(CreateTaskDTO data) throws ServiceValidationException {
+    public Task create(CreateTaskDTO data) throws ServiceValidationException {
 
         Task newTask = modelMapper.map(data, Task.class);
-        Category category = categoryService.getByType(data.getCategory());
-        newTask.setCategory(category);
+        Optional<Category> existingCategory = this.categoryService.findByType(data.getCategory());
+
+        if (existingCategory.isEmpty()) {
+            CreateCategoryDTO createCategory = new CreateCategoryDTO();
+            createCategory.setType(data.getCategory());
+            Category newCategory = this.categoryService.create(createCategory);
+            newTask.setCategory(newCategory);
+            newCategory.addTask(newTask);
+            Task savedTask = this.taskRepository.save(newTask);
+            return savedTask;
+        }
+
+        newTask.setCategory(existingCategory.get());
         Task savedTask = this.taskRepository.save(newTask);
         return savedTask;
     }
-    
-    
-
-    // public Task create(CreateTaskDTO data) throws ServiceValidationException {
-
-    //     Task newTask = modelMapper.map(data, Task.class);
-    //     Optional<Category> existingCategory = this.categoryService.findByType(data.getCategory());
-
-    //     Category category = existingCategory.orElseGet(() -> {
-    //         CreateCategoryDTO chosenCategory = new CreateCategoryDTO(data.getCategory());
-    //         return this.categoryService.create(chosenCategory);
-    //     });
-
-    //     newTask.setCategory(category);
-    //     Task savedTask = this.taskRepository.save(newTask);
-    //     return savedTask;
-    // }
 
     public List<Task> findAll() {
         return this.taskRepository.findAll();
@@ -82,16 +68,6 @@ public class TaskService {
         this.taskRepository.save(archivedTask);
         return true;
     }
-
-    // public Task updateTaskById(Long id, UpdateTaskDTO data) {
-    //    Task foundTask = this.taskRepository.getReferenceById(id);
-
-    //     // Task taskFromDb = foundTask.get();
-
-    //     this.modelMapper.map(data, foundTask);
-    //     this.taskRepository.save(foundTask);
-    //     return foundTask;
-    // }
 
     public Optional<Task> updateTaskById(Long id, UpdateTaskDTO data) throws ServiceValidationException {
           
@@ -123,6 +99,7 @@ public class TaskService {
             throw new ServiceValidationException(validationErrors);
         }
 
+        taskFromDb.setUpdatedAt(new Date());
         this.taskRepository.save(taskFromDb);
         return Optional.of(taskFromDb);
     }

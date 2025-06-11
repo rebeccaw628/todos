@@ -50,7 +50,6 @@ public class CategoryController {
             () -> new NotFoundException("Could not find category with ID " + id ));
 
         return new ResponseEntity<>(updated, HttpStatus.OK);
-
     }
 
     @DeleteMapping("/{id}")

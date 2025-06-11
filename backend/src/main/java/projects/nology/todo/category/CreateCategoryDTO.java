@@ -7,13 +7,15 @@ public class CreateCategoryDTO {
     @NotBlank
     private String type;
 
-    public CreateCategoryDTO(String type) {
-        this.type = type;
+    public CreateCategoryDTO() {
     }
 
     public String getType() {
         return type;
     }
 
-    
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }
