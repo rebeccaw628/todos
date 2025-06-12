@@ -1,7 +1,6 @@
 package projects.nology.todo.task;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +8,6 @@ import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import jakarta.validation.Valid;
 import projects.nology.todo.category.Category;
 import projects.nology.todo.category.CategoryService;
 import projects.nology.todo.category.CreateCategoryDTO;
@@ -103,10 +101,6 @@ public class TaskService {
         this.taskRepository.save(taskFromDb);
         return Optional.of(taskFromDb);
     }
-
-    // private Task getById(Long id) {
-    //     return taskRepository.getReferenceById(id);
-    // }
 
     public List<Task> findByCategory(String category) {
         return taskRepository.findByCategory_TypeIgnoreCase(category);

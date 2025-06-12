@@ -8,7 +8,6 @@ import jakarta.validation.Valid;
 import projects.nology.todo.common.exceptions.NotFoundException;
 import projects.nology.todo.common.exceptions.ServiceValidationException;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
