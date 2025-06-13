@@ -108,7 +108,7 @@ public class TaskServiceTest {
         Task existingTask = new Task();
 
         when(this.taskRepository.findById(id)).thenReturn(Optional.of(existingTask));
-        when(this.categoryService.getByType(testUpdateTaskDTO.getCategory())).thenReturn(testCategory);
+        when(this.categoryService.findByType(testUpdateTaskDTO.getCategory())).thenReturn(Optional.of(testCategory));
 
         doAnswer(invocation -> {
             UpdateTaskDTO dto = invocation.getArgument(0);

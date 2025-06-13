@@ -124,7 +124,7 @@ public class CategoryEndToEndTest {
 
         given()
                 .when()
-                .delete("categories/" + idToDelete)
+                .delete("/categories/{id}", idToDelete)
                 .then()
                 .statusCode(HttpStatus.NO_CONTENT.value());
     }
@@ -135,7 +135,7 @@ public class CategoryEndToEndTest {
 
         given()
                 .when()
-                .delete("categories/" + idToDelete)
+                .delete("/categories/{id}", idToDelete)
                 .then()
                 .statusCode(HttpStatus.BAD_REQUEST.value());
     }
@@ -150,10 +150,9 @@ public class CategoryEndToEndTest {
                 .contentType(ContentType.JSON)
                 .body(data)
                 .when()
-                .patch("/categories/" + idToUpdate)
+                .patch("/categories/{id}", idToUpdate)
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("type", equalTo("updated category"));
-
     }
 }

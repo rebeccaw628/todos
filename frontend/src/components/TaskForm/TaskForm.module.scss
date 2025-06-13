@@ -1,26 +1,15 @@
 .form {
   display: grid;
-  // justify-content: flex-start;
   grid-template-columns: 1.5fr 1fr auto auto;
-
-  // align-items: flex-start;
 
   &_description {
     display: flex;
-    // justify-content: space-between;
     gap: 10px;
     align-items: center;
   }
 
-  // &_taskdesc {
-  //   display: flex;
-  //   flex-direction: column;
-  //   border: solid 2px red;
-  // }
-
   &_duedate {
     display: flex;
-    // justify-content: flex-start;
     align-self: flex-start;
     align-items: center;
     gap: 3px;
@@ -31,7 +20,6 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  // border: solid 2px rgb(240, 7, 7);
 }
 
 .error {
@@ -51,8 +39,6 @@
   margin-right: 13px;
   :hover {
     color: #524942;
-    // background-color: darken($button-background, 10%);
-    // transform: scale(1.8);
   }
 }
 

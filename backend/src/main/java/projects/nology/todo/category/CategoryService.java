@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import projects.nology.todo.common.ValidationErrors;
 import projects.nology.todo.common.exceptions.ServiceValidationException;
+import projects.nology.todo.task.CreateTaskDTO;
+import projects.nology.todo.task.Task;
 
 
 @Service
@@ -33,12 +35,25 @@ public class CategoryService {
         if (this.categoryRepository.existsByTypeIgnoreCase(data.getType().trim())) {
             errors.add("type", "Category of type '" + data.getType() + "' already exists.");
             throw new ServiceValidationException(errors);
-            
         }
 
         Category newCategory = this.modelMapper.map(data,Category.class);
         return this.categoryRepository.save(newCategory);
         
+    }
+
+    public Optional<Category> createOrFind(CreateTaskDTO data, Task newTask) throws ServiceValidationException {
+        Optional<Category> existingCategory = this.findByType(data.getCategory());
+
+        if (existingCategory.isEmpty()) {
+            CreateCategoryDTO createCategory = new CreateCategoryDTO();
+            createCategory.setType(data.getCategory());
+            Category newCategory = this.create(createCategory);
+            newCategory.addTask(newTask);
+            return Optional.of(newCategory);
+        }
+
+        return existingCategory;    
     }
 
     public List<Category> findAll() {
@@ -80,6 +95,10 @@ public class CategoryService {
 
     public Category getByType(String category) {
         return this.categoryRepository.getByType(category);
+    }
+
+    public void deleteAll() {
+        this.categoryRepository.deleteAll();
     }
 
 }

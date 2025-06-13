@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getTaskById, type Task } from "../../services/tasks-services";
+import { type Task } from "../../services/tasks-services";
 import {
   faCalendar,
   faCopy,
@@ -7,8 +7,6 @@ import {
   faTrashCan,
 } from "@fortawesome/free-regular-svg-icons";
 import styles from "./TaskItem.module.scss";
-import { useContext } from "react";
-import { TasksContext } from "../../context/TasksContextProvider";
 
 interface TaskItemProps {
   task: Task;

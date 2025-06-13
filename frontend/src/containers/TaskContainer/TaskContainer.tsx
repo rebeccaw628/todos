@@ -1,5 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import { TasksContext } from "../../context/TasksContextProvider";
+import {
+  SideBarFilter,
+  TasksContext,
+} from "../../context/TasksContextProvider";
 import TaskItem from "../../components/TaskItem/TaskItem";
 import {
   createTask,
@@ -23,30 +26,29 @@ const TaskContainer = () => {
   const [completed, setCompleted] = useState<number[]>([]);
 
   useEffect(() => {
-    console.log(activeSidebarItem);
-    //update tasks display when category changes
-    if (activeSidebarItem === -1) {
-      setDisplayedTasks(tasks);
-    } else if (activeSidebarItem > 0) {
-      const newDisplay = tasks.filter(
-        (task) => task.category.id === activeSidebarItem
-      );
-      setDisplayedTasks(newDisplay);
-    } else if (activeSidebarItem === -2) {
-      const newDisplay = tasks.filter((task) => task.isCompleted === false);
-      setDisplayedTasks(newDisplay);
-    } else if (activeSidebarItem === -3) {
-      const newDisplay = tasks.filter((task) => task.isCompleted === true);
-      setDisplayedTasks(newDisplay);
+    let displayed: Task[] = [];
+    switch (activeSidebarItem) {
+      case SideBarFilter.ALL:
+        displayed = tasks;
+        break;
+      case SideBarFilter.COMPLETED:
+        displayed = tasks.filter((task) => task.isCompleted === true);
+        break;
+      case SideBarFilter.PROGRESS:
+        displayed = tasks.filter((task) => task.isCompleted === false);
+        break;
+      default:
+        displayed = tasks.filter(
+          (task) => task.category.id === activeSidebarItem
+        );
     }
+    setDisplayedTasks(displayed);
   }, [activeSidebarItem, tasks]);
 
   const handleCheck = (id: number) => {
     if (completed.includes(id)) {
-      console.log("unchecking task");
       setCompleted((prev) => prev.filter((completedId) => completedId != id));
     } else {
-      console.log("checking a completed task");
       setCompleted([...completed, id]);
     }
 
@@ -56,15 +58,12 @@ const TaskContainer = () => {
       )
     );
     const taskToUpdate = tasks.find((task) => task.id === id);
-    console.log("task to update:");
-    console.log(taskToUpdate);
     updateTaskById(id, { isCompleted: !taskToUpdate?.isCompleted })
       .then(() => fetchAllTasks())
       .catch((error) => console.warn(error));
   };
 
   const handleDuplicate = (task: Task) => {
-    console.log("duplicating task");
     const transformedData = transformData(task);
     handleSubmit(transformedData);
   };
@@ -76,14 +75,12 @@ const TaskContainer = () => {
   });
 
   const handleDelete = (id: number) => {
-    console.log("deleting task" + id);
     deleteTaskById(id)
       .then(() => fetchAllTasks())
       .catch((error) => console.warn(error));
   };
 
   const handleSubmit = (data: TaskFormData) => {
-    console.log("creating new task:" + data.description);
     createTask(data)
       .then(() => fetchAllTasks())
       .catch((error) => console.warn(error));
@@ -98,12 +95,6 @@ const TaskContainer = () => {
   };
 
   const handleSave = (id: number, data: TaskFormData) => {
-    console.log(
-      "saving edited task with new data:" + data.description,
-      data.category,
-      data.dueDate
-    );
-
     updateTaskById(id, data)
       .then(() => {
         fetchAllTasks();

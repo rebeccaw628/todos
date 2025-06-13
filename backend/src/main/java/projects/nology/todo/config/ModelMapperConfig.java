@@ -25,7 +25,7 @@ public class ModelMapperConfig {
             if (context.getSource() == null) {
                 return null;
             }
-            return context.getSource().trim();
+            return context.getSource().trim().toLowerCase();
         }
         
     }

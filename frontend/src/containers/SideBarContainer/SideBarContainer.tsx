@@ -7,7 +7,10 @@ import {
   deleteCategoryById,
 } from "../../services/categories-services";
 import styles from "./SideBarContainer.module.scss";
-import { TasksContext } from "../../context/TasksContextProvider";
+import {
+  SideBarFilter,
+  TasksContext,
+} from "../../context/TasksContextProvider";
 import {
   faCircleCheck,
   faCircleXmark,
@@ -24,6 +27,7 @@ const SideBarContainer = () => {
     activeSidebarItem,
     setActiveSidebarItem,
     fetchAllCategories,
+    fetchAllTasks,
   } = useContext(TasksContext);
   const [categoryCounts, setCategoryCounts] = useState<CountObj>({});
 
@@ -50,8 +54,8 @@ const SideBarContainer = () => {
     setCategoryCounts(countByType);
   }, [tasks, categories]);
 
-  const handleClick = (number: number) => {
-    setActiveSidebarItem(number);
+  const handleClick = (sideBarItem: string | number) => {
+    setActiveSidebarItem(sideBarItem);
   };
 
   const totalTasks = Object.values(categoryCounts).reduce(
@@ -75,7 +79,6 @@ const SideBarContainer = () => {
   };
 
   const handleDeleteById = async (id: number, type: string) => {
-    console.log(id, type);
     const confirmed = window.confirm(
       `All tasks in the category "${type}" will be deleted. Press OK to proceed or Cancel to go back.`
     );
@@ -83,7 +86,8 @@ const SideBarContainer = () => {
       deleteCategoryById(id)
         .then(() => {
           fetchAllCategories();
-          setActiveSidebarItem(-1);
+          fetchAllTasks();
+          setActiveSidebarItem(SideBarFilter.ALL);
         })
         .catch((e) => {
           console.warn(e);
@@ -101,9 +105,8 @@ const SideBarContainer = () => {
             title="ALL TASKS"
             number={totalTasks}
             icon={faCircleXmark}
-            index={-1}
-            active={-1 === activeSidebarItem}
-            onClick={() => handleClick(-1)}
+            active={SideBarFilter.ALL === activeSidebarItem}
+            onClick={() => handleClick(SideBarFilter.ALL)}
             onDelete={handleDeleteAll}
           />
           {categories.map((category) => (
@@ -126,17 +129,15 @@ const SideBarContainer = () => {
           title="In Progress"
           number={visibleTasks.length - completedTasks.length}
           icon={faBarsProgress}
-          index={-2}
-          active={-2 === activeSidebarItem}
-          onClick={() => handleClick(-2)}
+          active={SideBarFilter.PROGRESS === activeSidebarItem}
+          onClick={() => handleClick(SideBarFilter.PROGRESS)}
         />
         <SideBarItem
           title="Completed"
           number={completedTasks.length}
           icon={faCircleCheck}
-          index={-3}
-          active={-3 === activeSidebarItem}
-          onClick={() => handleClick(-3)}
+          active={SideBarFilter.COMPLETED === activeSidebarItem}
+          onClick={() => handleClick(SideBarFilter.COMPLETED)}
         />
       </div>
     </div>

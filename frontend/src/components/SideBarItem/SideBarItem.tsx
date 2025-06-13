@@ -6,7 +6,6 @@ interface SideBarItemProps {
   title: string;
   number: number;
   icon: IconDefinition;
-  index?: number;
   active: boolean;
   onClick: () => unknown;
   onDelete?: () => unknown;

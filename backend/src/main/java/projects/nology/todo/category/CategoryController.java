@@ -60,4 +60,10 @@ public class CategoryController {
         }
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAllCategories() {
+        this.categoryService.deleteAll();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

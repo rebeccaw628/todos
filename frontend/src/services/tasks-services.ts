@@ -40,7 +40,6 @@ export const getTaskById = async (id: number): Promise<Task> => {
 export const updateTaskById = async (
   id: number,
   data: UpdateTask
-  // data: UpdateTask
 ): Promise<Task> => {
   const response = await fetch(`${baseURL}/tasks/${id}`, {
     method: "PATCH",

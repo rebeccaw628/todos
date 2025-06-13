@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import projects.nology.todo.category.Category;
 import projects.nology.todo.category.CategoryService;
-import projects.nology.todo.category.CreateCategoryDTO;
 import projects.nology.todo.common.ValidationErrors;
 import projects.nology.todo.common.exceptions.ServiceValidationException;
 
@@ -30,19 +29,8 @@ public class TaskService {
     public Task create(CreateTaskDTO data) throws ServiceValidationException {
 
         Task newTask = modelMapper.map(data, Task.class);
-        Optional<Category> existingCategory = this.categoryService.findByType(data.getCategory());
-
-        if (existingCategory.isEmpty()) {
-            CreateCategoryDTO createCategory = new CreateCategoryDTO();
-            createCategory.setType(data.getCategory());
-            Category newCategory = this.categoryService.create(createCategory);
-            newTask.setCategory(newCategory);
-            newCategory.addTask(newTask);
-            Task savedTask = this.taskRepository.save(newTask);
-            return savedTask;
-        }
-
-        newTask.setCategory(existingCategory.get());
+        Optional<Category> returnedCategory = this.categoryService.createOrFind(data, newTask);
+        newTask.setCategory(returnedCategory.get());
         Task savedTask = this.taskRepository.save(newTask);
         return savedTask;
     }
@@ -82,8 +70,13 @@ public class TaskService {
 
         // If category field is updated, set new category
         if (data.getCategory() != null) {
-            Category category = categoryService.getByType(data.getCategory());
-            taskFromDb.setCategory(category);
+            Optional<Category> existingCategory = this.categoryService.findByType(data.getCategory());
+            if (existingCategory.isEmpty()) {
+                validationErrors.add("category", "Must select from existing categories.");
+            }
+            else {
+                taskFromDb.setCategory(existingCategory.get());
+            }
         }
 
         // If due date is before current date, add error

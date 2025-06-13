@@ -1,5 +1,6 @@
 package projects.nology.todo.category;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -20,13 +21,14 @@ public class Category extends BaseEntity{
                 cascade = CascadeType.REMOVE,
                 orphanRemoval = true)
     @JsonIgnoreProperties({"category"})
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 
     @Column
     private String type;
 
     public void addTask(Task task) {
         tasks.add(task);
+        task.setCategory(this);
     }
 
     public String getType() {
