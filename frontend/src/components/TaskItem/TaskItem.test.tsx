@@ -62,7 +62,7 @@ describe("SideBarItem", () => {
     return { categoryData, taskData, noDueDateTaskData };
   };
 
-  const { categoryData, taskData, noDueDateTaskData } = createMockData();
+  const { taskData, noDueDateTaskData } = createMockData();
 
   const mockCompletedTasks = [1, 2, 3];
 

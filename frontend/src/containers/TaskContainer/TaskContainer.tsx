@@ -16,7 +16,6 @@ import TaskForm from "../../components/TaskForm/TaskForm";
 import type { TaskFormData } from "../../components/TaskForm/schema";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { toast } from "react-toastify";
 
 const TaskContainer = () => {
   const {

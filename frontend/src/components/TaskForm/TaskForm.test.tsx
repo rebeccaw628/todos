@@ -46,7 +46,7 @@ describe("SideBarItem", () => {
     return { categoryData, taskData };
   };
 
-  const { categoryData, taskData } = createMockData();
+  const { categoryData } = createMockData();
   const createFormMockProps = {
     onSubmit: vi.fn(),
     categories: [categoryData],

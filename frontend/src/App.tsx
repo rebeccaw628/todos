@@ -2,7 +2,7 @@ import SideBarContainer from "./containers/SideBarContainer/SideBarContainer";
 import TaskContainer from "./containers/TaskContainer/TaskContainer";
 import TasksContextProvider from "./context/TasksContextProvider";
 import styles from "./App.module.scss";
-import { Bounce, Slide, ToastContainer } from "react-toastify";
+import { Slide, ToastContainer } from "react-toastify";
 
 function App() {
   return (
