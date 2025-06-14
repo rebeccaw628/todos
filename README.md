@@ -8,6 +8,16 @@ Tasker is a full-stack to-do list application that allows users to create, updat
 - **Backend**: Java, Spring Boot, Spring Data JPA
 - **Database**: MySQL
 
+## Contents Table
+
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Goals of the Project](#goals-of-the-project)
+- [Setup Instructions](#setup-instructions)
+- [Project Approach](#project-approach)
+- [Challenges](#challenges)
+- [Future Improvements](#future-improvements)
+
 ## Features
 
 Frontend (React + TypeScript):
@@ -23,16 +33,6 @@ Backend (Spring Boot):
 - Input validation and exception handling
 - Returns appropriate status codes and meaningful messages
 - MySQL database integration
-
-## Contents Table
-
-- [Features](#features)
-- [Screenshots](#screenshots)
-- [Goals of the Project](#goals-of-the-project)
-- [Setup Instructions](#setup-instructions)
-- [Project Approach](#project-approach)
-- [Challenges](#challenges)
-- [Future Improvements](#future-improvements)
 
 ## Screenshots
 
