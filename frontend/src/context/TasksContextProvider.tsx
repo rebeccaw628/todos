@@ -4,6 +4,7 @@ import {
   getAllCategories,
   type Category,
 } from "../services/categories-services";
+import { toast } from "react-toastify";
 
 interface TasksContextProviderProps {
   children: React.ReactNode;
@@ -18,6 +19,7 @@ interface TasksContextValues {
   setActiveSidebarItem: (item: number | string) => unknown;
   fetchAllTasks: () => unknown;
   fetchAllCategories: () => unknown;
+  notify: (message: string) => unknown;
 }
 
 export const SideBarFilter = {
@@ -35,6 +37,7 @@ const DefaultTasksContextValues: TasksContextValues = {
   setActiveSidebarItem: () => {},
   fetchAllTasks: () => [],
   fetchAllCategories: () => [],
+  notify: () => [],
 };
 
 export const TasksContext = createContext<TasksContextValues>(
@@ -72,6 +75,8 @@ const TasksContextProvider = ({ children }: TasksContextProviderProps) => {
     fetchAllCategories();
   }, [tasks]);
 
+  const notify = (message: string) => toast(message);
+
   return (
     <TasksContext
       value={{
@@ -83,6 +88,7 @@ const TasksContextProvider = ({ children }: TasksContextProviderProps) => {
         setActiveSidebarItem,
         fetchAllTasks,
         fetchAllCategories,
+        notify,
       }}
     >
       {children}

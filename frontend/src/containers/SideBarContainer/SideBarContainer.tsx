@@ -28,6 +28,7 @@ const SideBarContainer = () => {
     setActiveSidebarItem,
     fetchAllCategories,
     fetchAllTasks,
+    notify,
   } = useContext(TasksContext);
   const [categoryCounts, setCategoryCounts] = useState<CountObj>({});
 
@@ -87,6 +88,7 @@ const SideBarContainer = () => {
         .then(() => {
           fetchAllCategories();
           fetchAllTasks();
+          notify("Selected category and all related tasks deleted.");
           setActiveSidebarItem(SideBarFilter.ALL);
         })
         .catch((e) => {

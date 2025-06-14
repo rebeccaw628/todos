@@ -8,6 +8,7 @@ export const schema = z.object({
   category: z.string().min(3, "Category is required"),
   dueDate: z
     .string()
+    .nullable()
     .optional()
     .refine(
       (val) => {

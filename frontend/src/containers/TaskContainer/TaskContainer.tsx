@@ -16,10 +16,17 @@ import TaskForm from "../../components/TaskForm/TaskForm";
 import type { TaskFormData } from "../../components/TaskForm/schema";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 const TaskContainer = () => {
-  const { tasks, setTasks, activeSidebarItem, categories, fetchAllTasks } =
-    useContext(TasksContext);
+  const {
+    tasks,
+    setTasks,
+    activeSidebarItem,
+    categories,
+    fetchAllTasks,
+    notify,
+  } = useContext(TasksContext);
   const [displayedTasks, setDisplayedTasks] = useState<Task[]>(tasks);
   const [showForm, setShowForm] = useState<boolean>(false);
   const [editTaskId, setEditTaskId] = useState<number>(-1);
@@ -76,13 +83,19 @@ const TaskContainer = () => {
 
   const handleDelete = (id: number) => {
     deleteTaskById(id)
-      .then(() => fetchAllTasks())
+      .then(() => {
+        fetchAllTasks();
+        notify("Task deleted");
+      })
       .catch((error) => console.warn(error));
   };
 
   const handleSubmit = (data: TaskFormData) => {
     createTask(data)
-      .then(() => fetchAllTasks())
+      .then(() => {
+        fetchAllTasks();
+        notify("Task created");
+      })
       .catch((error) => console.warn(error));
   };
 
@@ -95,10 +108,11 @@ const TaskContainer = () => {
   };
 
   const handleSave = (id: number, data: TaskFormData) => {
-    updateTaskById(id, data)
+    updateTaskById(id, { ...data, dueDate: data.dueDate ?? undefined })
       .then(() => {
         fetchAllTasks();
         setEditTaskId(-1);
+        notify("Task updated");
       })
       .catch((error) => console.warn(error));
   };
