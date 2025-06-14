@@ -8,7 +8,7 @@ export interface Task {
   createdAt: string;
   updatedAt: string;
   description: string;
-  dueDate: string;
+  dueDate?: string;
   isCompleted: boolean;
   isArchived: boolean;
   category: Category;

@@ -66,10 +66,11 @@ public class TaskServiceTest {
         Task testTask = new Task();
         Category testCategory = new Category();
         testCategory.setType("chores");
+        Optional<Category> returnedCategory = Optional.of(testCategory);
 
 
         when(this.modelMapper.map(testTaskDTO, Task.class)).thenReturn(testTask);
-        when(this.categoryService.findByType(testTaskDTO.getCategory())).thenReturn(Optional.of(testCategory));
+        when(this.categoryService.createOrFind(testTaskDTO, testTask)).thenReturn(returnedCategory);
         when(this.taskRepository.save(any(Task.class))).thenReturn(testTask);
 
         Task result = this.taskService.create(testTaskDTO);

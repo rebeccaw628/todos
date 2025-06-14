@@ -7,6 +7,7 @@ import {
   faTrashCan,
 } from "@fortawesome/free-regular-svg-icons";
 import styles from "./TaskItem.module.scss";
+import { displayDate } from "../../services/utils";
 
 interface TaskItemProps {
   task: Task;
@@ -25,15 +26,6 @@ const TaskItem = ({
   onDuplicate,
   onDelete,
 }: TaskItemProps) => {
-  const displayDate = (dueDate: string) => {
-    const formattedDate = new Date(dueDate).toLocaleDateString("en-AU", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-    return formattedDate;
-  };
-
   return (
     <div className={styles.content}>
       <div className={styles.content_wrapper}>
@@ -47,14 +39,14 @@ const TaskItem = ({
         <div className={styles.task}>
           <p className={styles.task_text}>{task.description}</p>
           {task.dueDate && (
-            <div className={styles.task_duedate}>
+            <div className={styles.task_duedate} data-testid="dateDisplay">
               <FontAwesomeIcon icon={faCalendar} />
               <p>{displayDate(task.dueDate)}</p>
             </div>
           )}
         </div>
       </div>
-      {task.category ? <p>{task.category.type}</p> : <p>Not categorised</p>}
+      <p>{task.category.type}</p>
       <div className={styles.btns_container}>
         <button className={styles.btns}>
           <FontAwesomeIcon icon={faPenToSquare} onClick={onUpdate} />

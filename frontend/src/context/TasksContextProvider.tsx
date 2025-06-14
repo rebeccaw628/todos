@@ -23,7 +23,7 @@ interface TasksContextValues {
 export const SideBarFilter = {
   ALL: "ALL TASKS",
   COMPLETED: "Completed",
-  PROGRESS: "In progress",
+  PROGRESS: "In Progress",
 };
 
 const DefaultTasksContextValues: TasksContextValues = {

@@ -9,7 +9,7 @@ import type { Category } from "../../services/categories-services";
 interface TaskFormProps {
   onSubmit: (data: TaskFormData) => unknown;
   categories: Category[];
-  formType: String;
+  formType: string;
   existingTask?: TaskFormData;
 }
 
@@ -49,7 +49,12 @@ const TaskForm = ({
         <div className={styles.text_error_wrapper}>
           <div className={styles.form_duedate}>
             <label htmlFor="dueDate">Due date (Optional): </label>
-            <input type="date" id="dueDate" {...register("dueDate")} />
+            <input
+              type="date"
+              id="dueDate"
+              {...register("dueDate")}
+              data-testid="date-input"
+            />
           </div>
           {errors.dueDate && (
             <small className={styles.error}>{errors.dueDate.message}</small>
@@ -82,6 +87,7 @@ const TaskForm = ({
           <FontAwesomeIcon
             className={styles.icons}
             icon={formType === "create" ? faSquarePlus : faCircleCheck}
+            data-testid="form-icon"
           />
         </button>
       </div>

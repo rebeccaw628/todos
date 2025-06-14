@@ -20,10 +20,18 @@ const SideBarItem = ({
   onDelete,
 }: SideBarItemProps) => {
   return (
-    <div className={active ? styles.active : styles.inactive} onClick={onClick}>
+    <div
+      className={active ? styles.active : styles.inactive}
+      onClick={onClick}
+      data-testid="clickedItem"
+    >
       <p>{title}</p>
       <p>{number}</p>
-      <FontAwesomeIcon icon={icon} onClick={onDelete} />
+      <FontAwesomeIcon
+        icon={icon}
+        onClick={onDelete}
+        aria-label="delete-icon"
+      />
     </div>
   );
 };
