@@ -24,7 +24,17 @@ Backend (Spring Boot):
 - Returns appropriate status codes and meaningful messages
 - MySQL database integration
 
-## Demo & Snippets
+## Contents Table
+
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Goals of the Project](#goals-of-the-project)
+- [Setup Instructions](#setup-instructions)
+- [Project Approach](#project-approach)
+- [Challenges](#challenges)
+- [Future Improvements](#future-improvements)
+
+## Screenshots
 
 - An example of a to-do list with tasks:
   ![App Screenshot](./frontend/screenshots/tasksList.png)
@@ -156,3 +166,8 @@ npm run dev
 
 - Managing optional inputs like `dueDate` introduced challenges when validating forms, especially when using TypeScript and schema validation tools.
 - Special care was taken to correctly handle `null`, `undefined`, and empty values without breaking the form or type constraints
+
+## Future Improvements
+
+- Implementing pagination and filtering in backend
+- Allowing the user to select between the option of creating a new category or choosing from an existing category when creating a new task
