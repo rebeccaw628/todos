@@ -1,8 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  SideBarFilter,
-  TasksContext,
-} from "../../context/TasksContextProvider";
+import { TasksContext } from "../../context/TasksContextProvider";
 import TaskItem from "../../components/TaskItem/TaskItem";
 import {
   createTask,
@@ -16,6 +13,7 @@ import TaskForm from "../../components/TaskForm/TaskForm";
 import type { TaskFormData } from "../../components/TaskForm/schema";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { SideBarFilter } from "../../services/utils";
 
 const TaskContainer = () => {
   const {

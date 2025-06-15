@@ -79,13 +79,13 @@ describe("SideBarItem", () => {
     vi.resetAllMocks();
   });
 
-  // test("displays task description, dueDate, category", () => {
-  //   render(<TaskItem {...mockProps} />);
-  //   expect(screen.getByText("pick up dog")).toBeInTheDocument();
-  //   screen.debug();
-  //   expect(screen.getByText("15 June 2025")).toBeInTheDocument();
-  //   expect(screen.getByText("chores")).toBeInTheDocument();
-  // });
+  test("displays task description, dueDate, category", () => {
+    render(<TaskItem {...mockProps} />);
+    expect(screen.getByText("pick up dog")).toBeInTheDocument();
+    screen.debug();
+    expect(screen.getByTestId("dateDisplay")).toBeInTheDocument();
+    expect(screen.getByText("chores")).toBeInTheDocument();
+  });
 
   test("calls onChange when the checkbox is clicked", async () => {
     render(<TaskItem {...mockProps} />);

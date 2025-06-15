@@ -6,3 +6,9 @@ export const displayDate = (dueDate: string) => {
   });
   return formattedDate;
 };
+
+export const SideBarFilter = {
+  ALL: "ALL TASKS",
+  COMPLETED: "Completed",
+  PROGRESS: "In Progress",
+};

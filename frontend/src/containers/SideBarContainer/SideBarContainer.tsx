@@ -7,10 +7,7 @@ import {
   deleteCategoryById,
 } from "../../services/categories-services";
 import styles from "./SideBarContainer.module.scss";
-import {
-  SideBarFilter,
-  TasksContext,
-} from "../../context/TasksContextProvider";
+import { TasksContext } from "../../context/TasksContextProvider";
 import {
   faCircleCheck,
   faCircleXmark,
@@ -18,6 +15,7 @@ import {
 import SideBarItem from "../../components/SideBarItem/SideBarItem";
 import { faBarsProgress } from "@fortawesome/free-solid-svg-icons";
 import { type Task } from "../../services/tasks-services";
+import { SideBarFilter } from "../../services/utils";
 
 const SideBarContainer = () => {
   const {
@@ -104,7 +102,7 @@ const SideBarContainer = () => {
         <h2>CATEGORIES</h2>
         <div className={styles.categories}>
           <SideBarItem
-            title="ALL TASKS"
+            title={SideBarFilter.ALL}
             number={totalTasks}
             icon={faCircleXmark}
             active={SideBarFilter.ALL === activeSidebarItem}
@@ -128,14 +126,14 @@ const SideBarContainer = () => {
       <div className={styles.status_container}>
         <h2>STATUS</h2>
         <SideBarItem
-          title="In Progress"
+          title={SideBarFilter.PROGRESS}
           number={visibleTasks.length - completedTasks.length}
           icon={faBarsProgress}
           active={SideBarFilter.PROGRESS === activeSidebarItem}
           onClick={() => handleClick(SideBarFilter.PROGRESS)}
         />
         <SideBarItem
-          title="Completed"
+          title={SideBarFilter.COMPLETED}
           number={completedTasks.length}
           icon={faCircleCheck}
           active={SideBarFilter.COMPLETED === activeSidebarItem}

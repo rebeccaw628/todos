@@ -5,6 +5,7 @@ import {
   type Category,
 } from "../services/categories-services";
 import { toast } from "react-toastify";
+import { SideBarFilter } from "../services/utils";
 
 interface TasksContextProviderProps {
   children: React.ReactNode;
@@ -21,12 +22,6 @@ interface TasksContextValues {
   fetchAllCategories: () => unknown;
   notify: (message: string) => unknown;
 }
-
-export const SideBarFilter = {
-  ALL: "ALL TASKS",
-  COMPLETED: "Completed",
-  PROGRESS: "In Progress",
-};
 
 const DefaultTasksContextValues: TasksContextValues = {
   tasks: [],

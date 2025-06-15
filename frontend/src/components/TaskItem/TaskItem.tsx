@@ -39,9 +39,9 @@ const TaskItem = ({
         <div className={styles.task}>
           <p className={styles.task_text}>{task.description}</p>
           {task.dueDate && (
-            <div className={styles.task_duedate} data-testid="dateDisplay">
+            <div className={styles.task_duedate}>
               <FontAwesomeIcon icon={faCalendar} />
-              <p>{displayDate(task.dueDate)}</p>
+              <p data-testid="dateDisplay">{displayDate(task.dueDate)}</p>
             </div>
           )}
         </div>

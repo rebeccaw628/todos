@@ -22,7 +22,7 @@ interface mockCategory {
   tasks: mockTask[];
 }
 
-describe("SideBarItem", () => {
+describe("TaskForm", () => {
   const createMockData = () => {
     const categoryData: mockCategory = {
       id: 1,
@@ -69,14 +69,13 @@ describe("SideBarItem", () => {
     vi.resetAllMocks();
   });
 
-  describe("TaskForm"),
-    test("renders input fields and submit button", () => {
-      render(<TaskForm {...createFormMockProps} />);
-      expect(screen.getByPlaceholderText("Add new task")).toBeInTheDocument();
-      expect(screen.getByTestId("date-input")).toBeInTheDocument();
-      expect(screen.getByRole("combobox")).toBeInTheDocument();
-      expect(screen.getByRole("button")).toBeInTheDocument();
-    });
+  test("renders input fields and submit button", () => {
+    render(<TaskForm {...createFormMockProps} />);
+    expect(screen.getByPlaceholderText("Add new task")).toBeInTheDocument();
+    expect(screen.getByTestId("date-input")).toBeInTheDocument();
+    expect(screen.getByRole("combobox")).toBeInTheDocument();
+    expect(screen.getByRole("button")).toBeInTheDocument();
+  });
 
   test("renders the correct icon for create mode", () => {
     render(<TaskForm {...createFormMockProps} />);

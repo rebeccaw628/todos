@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import CategoryForm from "./CategoryForm";
 import userEvent from "@testing-library/user-event";
 
-describe("SideBarItem", () => {
+describe("CategoryForm", () => {
   const mockProps = {
     onFormSubmit: vi.fn(),
   };
@@ -12,12 +12,11 @@ describe("SideBarItem", () => {
     vi.resetAllMocks();
   });
 
-  describe("CategoryForm"),
-    test("renders input fields and submit button", () => {
-      render(<CategoryForm {...mockProps} />);
-      expect(screen.getByPlaceholderText("ADD CATEGORY")).toBeInTheDocument();
-      expect(screen.getByRole("button")).toBeInTheDocument();
-    });
+  test("renders input fields and submit button", () => {
+    render(<CategoryForm {...mockProps} />);
+    expect(screen.getByPlaceholderText("ADD CATEGORY")).toBeInTheDocument();
+    expect(screen.getByRole("button")).toBeInTheDocument();
+  });
 
   test("submits form with valid input"),
     async () => {
