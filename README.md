@@ -162,10 +162,14 @@ npm run dev
 
 - Keeping the frontend and backend in sync involved implementing reliable patterns for fetching and updating data
 
-**Form Validation and Optional Fields**
+**Implementing Single Responsibility Principle**
 
-- Managing optional inputs like `dueDate` introduced challenges when validating forms, especially when using TypeScript and schema validation tools.
-- Special care was taken to correctly handle `null`, `undefined`, and empty values without breaking the form or type constraints
+- Clearly separating concerns across layers
+
+**Testing with Mockito**
+
+- Learning concepts such as stubbing, verifying interactions, and intercepting method calls
+- This was a valuable learning curve that helped me appreciate how Mockito fits into unit testing by simulating controlled behaviors and validating method interactions
 
 ## Future Improvements
 

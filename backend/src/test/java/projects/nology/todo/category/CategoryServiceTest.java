@@ -119,7 +119,7 @@ public class CategoryServiceTest {
         Long id = 1L;
         Category testCategory = new Category();
         testCategory.setType("gardening");
-        //FIX
+        
         when(this.categoryRepository.findById(id)).thenReturn(Optional.of(testCategory));
         when(modelMapper.map(testUpdateCategoryDTO, Category.class)).thenReturn(testCategory);
         
