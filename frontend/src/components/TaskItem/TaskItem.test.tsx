@@ -7,6 +7,7 @@ vi.mock("../../services/utils", () => ({
 }));
 import TaskItem from "./TaskItem";
 import * as dateUtils from "../../services/utils";
+import React from "react";
 
 interface mockTask {
   id: number;
@@ -76,7 +77,7 @@ describe("SideBarItem", () => {
   };
 
   beforeEach(() => {
-    vi.resetAllMocks();
+    vi.clearAllMocks();
   });
 
   test("displays task description, dueDate, category", () => {
@@ -84,6 +85,7 @@ describe("SideBarItem", () => {
     expect(screen.getByText("pick up dog")).toBeInTheDocument();
     screen.debug();
     expect(screen.getByTestId("dateDisplay")).toBeInTheDocument();
+    expect(screen.getByTestId("dateDisplay")).toHaveTextContent("15 June 2025");
     expect(screen.getByText("chores")).toBeInTheDocument();
   });
 
@@ -92,7 +94,7 @@ describe("SideBarItem", () => {
     const user = userEvent.setup();
     const clicked = screen.getByRole("checkbox");
     await user.click(clicked);
-    expect(mockProps.onChange).toHaveBeenCalled;
+    expect(mockProps.onChange).toHaveBeenCalled();
   });
 
   test("does not display dueDate if there is no dueDate", () => {

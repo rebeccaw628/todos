@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import SideBarItem from "./SideBarItem";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import userEvent from "@testing-library/user-event";
+import React from "react";
 
 describe("SideBarItem", () => {
   const mockData = {

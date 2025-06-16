@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import CategoryForm from "./CategoryForm";
 import userEvent from "@testing-library/user-event";
+import React from "react";
 
 describe("CategoryForm", () => {
   const mockProps = {

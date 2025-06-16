@@ -68,7 +68,7 @@ const TasksContextProvider = ({ children }: TasksContextProviderProps) => {
 
   useEffect(() => {
     fetchAllCategories();
-  }, [tasks]);
+  }, []);
 
   const notify = (message: string) => toast(message);
 
